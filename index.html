@@ -202,10 +202,10 @@
 <dialog id="dlg">
   <form method="dialog" id="form">
     <h3 id="dlg-title">Deliverable</h3>
-    <label class="l">Deliverable</label><input type="text" id="f-name" required placeholder="What needs doing? Be specific. Or don't.">
-    <label class="l">Description</label><textarea id="f-desc" rows="3" placeholder="Context nobody will read"></textarea>
+    <label class="l">Deliverable</label><input type="text" id="f-name" maxlength="200" required placeholder="What needs doing? Be specific. Or don't.">
+    <label class="l">Description</label><textarea id="f-desc" maxlength="5000" rows="3" placeholder="Context nobody will read"></textarea>
     <div class="grid2">
-      <div><label class="l">Stakeholder</label><input type="text" id="f-contact" placeholder="Who to blame"></div>
+      <div><label class="l">Stakeholder</label><input type="text" id="f-contact" maxlength="200" placeholder="Who to blame"></div>
       <div><label class="l">Soft deadline</label><input type="date" id="f-due"></div>
     </div>
     <label class="l">Tags</label>
