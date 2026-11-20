@@ -7,19 +7,19 @@
 <link rel="icon" type="image/svg+xml" href="/icon.svg">
 <style>
   :root {
-    --ground:#eef4fb; --surface:#fff; --line:#d5e2f1; --ink:#14233b; --muted:#5b6f8c; --faint:#8fa1ba;
-    --accent:#3b6fb6; --accent-d:#2c5794; --accent-rgb:59,111,182;
-    --bucket:rgba(255,255,255,.65); --done-bucket:#e1eaf5; --done-over:#d3e0ef; --done-card:#f4f8fc; --done-line:#d3e0ef;
-    --tag-bg:#e3edf9; --tag-fg:#2c5794; --field-line:#c3d4e8; --hover:#f4f8fd; --on-accent:#fff;
+    --ground:#e8f0fa; --surface:#fff; --line:#cfe0f2; --ink:#0f1f38; --muted:#4a5f7f; --faint:#7a8fa5;
+    --accent:#2563eb; --accent-d:#1d4ed8; --accent-rgb:37,99,235;
+    --bucket:rgba(255,255,255,.7); --done-bucket:#d4e1f4; --done-over:#c5d6f0; --done-card:#f0f6fd; --done-line:#c5d6f0;
+    --tag-bg:#dce9f8; --tag-fg:#1d4ed8; --field-line:#b8cceb; --hover:#f8fbfe; --on-accent:#fff;
     --r-lg:20px; --r:14px; --r-sm:9px;
     --shadow:0 1px 2px rgba(27,33,51,.05), 0 4px 12px rgba(27,33,51,.05);
     --shadow-up:0 2px 4px rgba(27,33,51,.06), 0 12px 28px rgba(27,33,51,.12);
   }
-  /* priority palettes: c = main, t = tint, d = readable dark shade */
-  .p-High   { --c:#e5484d; --t:#fdecec; --d:#b4232a; }
-  .p-Medium { --c:#e8a317; --t:#fdf3dc; --d:#8a5a00; }
-  .p-Low    { --c:#2fa37f; --t:#e1f5ed; --d:#176b51; }
-  .p-Done   { --c:#a3a9b8; --t:#e4e7ed; --d:#666d80; }
+  /* priority palettes: c = main, c-rgb = RGB for rgba(), t = tint, d = readable dark shade */
+  .p-High   { --c:#e5484d; --c-rgb:229,55,77; --t:#fdecec; --d:#b4232a; }
+  .p-Medium { --c:#e8a317; --c-rgb:232,163,23; --t:#fdf3dc; --d:#8a5a00; }
+  .p-Low    { --c:#2fa37f; --c-rgb:47,163,127; --t:#e1f5ed; --d:#176b51; }
+  .p-Done   { --c:#a3a9b8; --c-rgb:163,169,184; --t:#e4e7ed; --d:#666d80; }
 
 
   .exports { padding:0 18px 8px; font-size:12px; color:var(--muted); display:flex; gap:8px; align-items:center; }
@@ -29,18 +29,22 @@
 
   /* colour schemes; calm-blue is the default (:root). Palettes follow the colour descriptions of the
      matching Figma colour-combination entries (the page publishes images, not hex codes). */
-  [data-theme="stormy-morning"] { --ground:#e6eaee; --surface:#f8fafb; --line:#cfd6dd; --ink:#232d38; --muted:#5e6b79; --faint:#8a96a3;
-    --accent:#5a7690; --accent-d:#455f77; --accent-rgb:90,118,144; --bucket:rgba(255,255,255,.55); --done-bucket:#d9dfe5; --done-over:#cdd5dc; --done-card:#eff2f4; --done-line:#cdd5dc;
-    --tag-bg:#dde4ea; --tag-fg:#3f566b; --field-line:#bcc6d0; --hover:#eef1f4; }
-  [data-theme="urban-graffiti"] { --ground:#111214; --surface:#1b1d21; --line:#2f3238; --ink:#f2f3f5; --muted:#a7acb5; --faint:#70757e;
-    --accent:#e5372c; --accent-d:#c9241b; --accent-rgb:229,55,44; --bucket:rgba(255,255,255,.04); --done-bucket:#151618; --done-over:#1e2023; --done-card:#141517; --done-line:#292b30;
-    --tag-bg:#12301f; --tag-fg:#39ff88; --field-line:#3a3e46; --hover:#25282d; --on-accent:#fff; color-scheme:dark; }
-  [data-theme="harbor-haze"] { --ground:#e7e6e4; --surface:#faf9f7; --line:#d3d0cb; --ink:#2a2d33; --muted:#666b72; --faint:#939499;
-    --accent:#5f6e7e; --accent-d:#4a5766; --accent-rgb:95,110,126; --bucket:rgba(255,255,255,.55); --done-bucket:#dcdad6; --done-over:#d0cdc8; --done-card:#f1efec; --done-line:#d0cdc8;
-    --tag-bg:#e4dfd7; --tag-fg:#5a4f43; --field-line:#c4c0b9; --hover:#f1efec; }
-  [data-theme="desert-mirage"] { --ground:#f4ebdc; --surface:#fffaf1; --line:#e6d7bd; --ink:#3a2c22; --muted:#7a6a58; --faint:#a5967f;
-    --accent:#c0583a; --accent-d:#9f4328; --accent-rgb:192,88,58; --bucket:rgba(255,255,255,.55); --done-bucket:#ebdfc8; --done-over:#e1d3b8; --done-card:#f9f2e3; --done-line:#e1d3b8;
-    --tag-bg:#dfe6d3; --tag-fg:#4a5f3a; --field-line:#d8c8aa; --hover:#f9f2e3; }
+  [data-theme="stormy-morning"] { --ground:#dce5ed; --surface:#f4f7fb; --line:#b8c8da; --ink:#1a2a3a; --muted:#4a5f78; --faint:#7a8fa0;
+    --accent:#4a7ba7; --accent-d:#35638f; --accent-rgb:74,123,167; --bucket:rgba(255,255,255,.65); --done-bucket:#c8d8e8; --done-over:#b8cae5; --done-card:#ecf3f9; --done-line:#b8cae5;
+    --tag-bg:#cad8e5; --tag-fg:#2d4a63; --field-line:#a8bace; --hover:#ecf1f6;
+    --p-High-c:#d9646e; --p-High-rgb:217,100,110; --p-Medium-c:#e8a830; --p-Medium-rgb:232,168,48; --p-Low-c:#5aa57f; --p-Low-rgb:90,165,127; --p-Done-c:#7a8fa0; --p-Done-rgb:122,143,160; }
+  [data-theme="urban-graffiti"] { --ground:#0a0a0d; --surface:#141618; --line:#252a30; --ink:#fafbfc; --muted:#b0b6be; --faint:#7a7f88;
+    --accent:#ff3b30; --accent-d:#e5241e; --accent-rgb:255,59,48; --bucket:rgba(255,255,255,.06); --done-bucket:#0f1113; --done-over:#191c20; --done-card:#0d1012; --done-line:#232830;
+    --tag-bg:#0d2818; --tag-fg:#2cff77; --field-line:#323a42; --hover:#1f2328; --on-accent:#fff; color-scheme:dark;
+    --p-High-c:#ff5252; --p-High-rgb:255,82,82; --p-Medium-c:#ffca28; --p-Medium-rgb:255,202,40; --p-Low-c:#2cff77; --p-Low-rgb:44,255,119; --p-Done-c:#b8c0cc; --p-Done-rgb:184,192,204; }
+  [data-theme="harbor-haze"] { --ground:#dfe0de; --surface:#faf9f8; --line:#c8c3ba; --ink:#1f2328; --muted:#5a606a; --faint:#8a909a;
+    --accent:#4a6b8f; --accent-d:#3a5a7f; --accent-rgb:74,107,143; --bucket:rgba(255,255,255,.6); --done-bucket:#d0ccc7; --done-over:#c3beb5; --done-card:#efefed; --done-line:#c3beb5;
+    --tag-bg:#dcd6cc; --tag-fg:#4a4038; --field-line:#b8b0a5; --hover:#efedea;
+    --p-High-c:#c97563; --p-High-rgb:201,117,99; --p-Medium-c:#b89f52; --p-Medium-rgb:184,159,82; --p-Low-c:#6a8f70; --p-Low-rgb:106,143,112; --p-Done-c:#8a9299; --p-Done-rgb:138,146,153; }
+  [data-theme="desert-mirage"] { --ground:#f0e6d4; --surface:#fffcf7; --line:#dcc8aa; --ink:#2f261a; --muted:#6f5f4a; --faint:#a08968;
+    --accent:#d97028; --accent-d:#b85920; --accent-rgb:217,112,40; --bucket:rgba(255,255,255,.65); --done-bucket:#e3d6c0; --done-over:#d8cab5; --done-card:#f8f4ed; --done-line:#d8cab5;
+    --tag-bg:#dfe8d8; --tag-fg:#3a4f2a; --field-line:#cdb89a; --hover:#f8f4ed;
+    --p-High-c:#ea7d4a; --p-High-rgb:234,125,74; --p-Medium-c:#e0b844; --p-Medium-rgb:224,184,68; --p-Low-c:#8aae6f; --p-Low-rgb:138,174,111; --p-Done-c:#a89975; --p-Done-rgb:168,153,117; }
   [data-theme="urban-graffiti"] .p-High { --t:#3a1d24; --d:#ff8a8f; }
   [data-theme="urban-graffiti"] .p-Medium { --t:#3a2f14; --d:#f5c453; }
   [data-theme="urban-graffiti"] .p-Low { --t:#15332a; --d:#5fd3a8; }
@@ -101,7 +105,7 @@
   #right .search input { width:100%; }
 
   /* ── cards ── */
-  .card { background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:12px 14px 8px; margin-bottom:10px; cursor:grab;
+  .card { background:rgba(var(--c-rgb, 255 255 255), 0.14); border:1px solid var(--line); border-radius:var(--r); padding:12px 14px 8px; margin-bottom:10px; cursor:grab;
     box-shadow:var(--shadow); transition:transform .15s, box-shadow .15s, border-color .15s; }
   .card:hover { transform:translateY(-2px); box-shadow:var(--shadow-up); }
   .card:active { cursor:grabbing; }
@@ -279,8 +283,133 @@ const pick = a => a[Math.floor(Math.random() * a.length)];
 const DONE_THINGS = ["Award", "Raise", "Promotion", "Pizza party", "Credit", "Thank-you email", "Gold star", "Visibility", "Applause", "Bonus"];
 const DONE_STATUS = ["pending", "stuck in committee", "blocked by legal", "on the roadmap", "scheduled for Q4", "lost in email", "awaiting sign-off",
   "circling back", "pending synergy", "TBD", "under review", "deprioritized", "lost to a reorg", "approved, not funded"];
-const TAGLINES = ['Per my last email.', 'Circling back since 2026.', "Let's double-click on that.", 'Aligning stakeholders, one drag at a time.',
-  'Moving the needle, slightly.', 'This meeting could have been a drag-and-drop.', 'Synergy, but make it sqlite.'];
+const TAGLINES = [
+  'Per my last email.',
+  'Circling back since 2026.',
+  "Let's double-click on that.",
+  'Aligning stakeholders, one drag at a time.',
+  'Moving the needle, slightly.',
+  'This meeting could have been a drag-and-drop.',
+  'Synergy, but make it sqlite.',
+  'Let me action this offline.',
+  'Touch base when you get a sec.',
+  'Taking this to the next level.',
+  'Bandwidth constraints detected.',
+  "It's not a priority until it's a fire.",
+  'Low-hanging fruit: everything.',
+  'Pivot pending feedback.',
+  "We're all wearing many hats here.",
+  'Boiling the ocean on this one.',
+  'That ship sailed. New ship time.',
+  "Let's table this and reconvene.",
+  'Gut check: is this a priority?',
+  'Just making it visible.',
+  'One more thing before standup…',
+  'Going forward, let's…',
+  'Folks, folks. Folks.',
+  'Hard stop at 3.',
+  'Blocking all calendars.',
+  'Pinging you async.',
+  'Web 3 this bad boy.',
+  'Fail fast, really fast here.',
+  'Need a deck by EOD.',
+  'Pulling this into a separate meeting.',
+  'Can we get a Slack huddle?',
+  'Heads up: scope creep incoming.',
+  'Red team this real quick.',
+  'Playing 4D chess on this.',
+  'Cross-functional alignment required.',
+  'Resourcing constraints TBD.',
+  "Let's socialize this idea first.",
+  'Big picture: we're crushing it.',
+  'Eating our own dog food here.',
+  'Transparency is key going forward.',
+  'All hands on deck or just FYI?',
+  'Deferring to next quarter.',
+  'That worked before. Twice.',
+  'Aggressive timeline, but achievable.',
+  'Velocity metrics look good.',
+  'Parking lot this for now.',
+  'Raising the bar on standards.',
+  'Leveraging existing infrastructure.',
+  'Sprint planning is tight this week.',
+  'Did we sync on definitions?',
+  'Stakeholder buy-in pending.',
+  'Moonshot: ambitious but…',
+  'Death march energy, but funded.',
+  'Trying a 10x approach.',
+  'Betting the farm on this.',
+  'Org redesign incoming.',
+  'Reorg: same chaos, new titles.',
+  'We need a facilitator for this.',
+  'Sending a Slack thread instead.',
+  'That's a great question for Slack.',
+  'Let me send you a loom on this.',
+  'Async update incoming tomorrow.',
+  'Documenting this for future reference… eventually.',
+  'Technical debt is a feature now.',
+  'We'll refactor it next sprint. Same plan as last sprint.',
+  'That MVP launched 18 months ago.',
+  'Hire faster than we burn out.',
+  'Hiring freeze? Just hired 60 people.',
+  'Layoff energy mixed with new sales targets.',
+  'Learning opportunity: we fired half the team.',
+  'No documentation = job security.',
+  'Our code review process is basically philosophy.',
+  'Estimation meeting: 3 hours to estimate a 2-hour task.',
+  'Did we consider the market window here?',
+  'Competitive pressure says we need this yesterday.',
+  'Our burn rate is concerning but we're pivoting.',
+  'Runway calculation: math is hard.',
+  'The customer asked for it, so now it\'s urgent.',
+  'Customer success wants this. Marketing wants that. We want sleep.',
+  'Product wants a feature. Eng wants a holiday.',
+  'Post-mortem: We knew this would break.',
+  'Retrospective: same issues, different quarter.',
+  'The data says one thing, leadership wants another.',
+  'Gut feeling beats data in this org.',
+  'We\'re data-driven when the data supports us.',
+  'Quiet quitting meets quiet hiring.',
+  'Retention bonus for people we\'ll replace anyway.',
+  'Your OKRs didn\'t align with leadership\'s OKRs.',
+  'OKR realignment mid-quarter incoming.',
+  'That initiative? Dead. Next one\'s a go.',
+  'Technical interview: can you use a computer?',
+  'Onboarding: here\'s your laptop, good luck.',
+  'Code of conduct violations are just culture.',
+  'We\'re not toxic, we\'re just intense.',
+  'Psychological safety equals agreeing with leadership.',
+  'Diversity hire equals diversity theater.',
+  'Remote work is optional (you\'ll be passed over if you use it).',
+  'Unlimited PTO means unlimited guilt.',
+  'That feature will ship next quarter. Narrator: It didn\'t.',
+  'Ship it and stabilize it later.',
+  'Shipping bugs is iterating fast.',
+  'That\'s not a bug, that\'s a roadmap.',
+  'We\'ll get to your bug in the next sprint. Same as 20 sprints ago.',
+  'Production is on fire but we\'re in standup.',
+  'On-call rotation: rotating suffering.',
+  'Incident response: React, blame, repeat.',
+  'The outage was actually a feature launch.',
+  'Five nines of uptime (after the incidents).',
+  'Scale is a future problem.',
+  'Growth at all costs, monitoring is optional.',
+  'We\'re hiring for roles we haven\'t defined yet.',
+  'That role doesn\'t exist. Let\'s make it your job.',
+  'Title inflation: we\'re all directors now.',
+  'Director-level IC work for mid-level pay.',
+  'Compensation adjustment: nothing's changing except the market.',
+  'We hear you on equity vesting.',
+  'Your equity is worth something… eventually… maybe.',
+  'Stock split news: diluted and excited.',
+  'The all-hands was just vibes.',
+  'Vision is fuzzy on purpose.',
+  'Strategy is made up as we go.',
+  'That roadmap is a guideline.',
+  'The roadmap changed. Again.',
+  'We\'re hiring for stability. Watch us destabilize.',
+  'Culture is code. Except we have no culture code.'
+];
 let tasks = [], dragId = null, editId = null;
 const $ = id => document.getElementById(id);
 const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
