@@ -1,0 +1,18 @@
+services:
+  gem-ergency-room:
+    build: .
+    image: gem-ergency-room:latest
+    restart: unless-stopped
+    ports:
+      # Loopback only: the app has no authentication. Put a reverse proxy with auth in front
+      # before changing this to expose it on a network.
+      - "127.0.0.1:${GEM_PORT:-8000}:8000"
+    environment:
+      GEM_MAX_HIGH: ${GEM_MAX_HIGH:-3}
+      GEM_MAX_MEDIUM: ${GEM_MAX_MEDIUM:-5}
+      GEM_MAX_LOW: ${GEM_MAX_LOW:-unlimited}
+    volumes:
+      - gem-data:/data
+
+volumes:
+  gem-data:

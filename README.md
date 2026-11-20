@@ -4,8 +4,8 @@
 
 The Gem-ergency Room is a local, drag-and-drop task board. It sorts work into buckets that reflect the modern workplace’s nuanced relationship with urgency:
 
-- **Fire Drills** (High): up to 3 tasks. The cap is a boundary, not a suggestion from leadership.
-- **Important-ish** (Medium): up to 5 tasks. A comfortable place for work with a calendar invite.
+- **Fire Drills** (High): up to 3 tasks by default (configurable). The cap is a boundary, not a suggestion from leadership.
+- **Important-ish** (Medium): up to 5 tasks by default (configurable). A comfortable place for work with a calendar invite.
 - **Someday Maybe** (Low): unlimited. Optimism scales horizontally.
 - **Done**: completed work, grouped by the date it was moved. The closest thing to a performance review this app provides.
 
@@ -41,9 +41,60 @@ python app.py
 
 Open `http://127.0.0.1:8080` when using the alternate port. Stop the server with `Ctrl+C`; the database will still be there, patiently awaiting the next check-in.
 
+## Configuration
+
+Every setting can be given as a command-line flag or an environment variable (flags win). Nothing is required.
+
+| Flag | Environment variable | Default | Meaning |
+|---|---|---|---|
+| `--host` | `GEM_HOST` | `127.0.0.1` | Bind address |
+| `--port` | `GEM_PORT` (or `PORT`) | `8000` | Listen port |
+| `--db` | `GEM_DB_PATH` | `tasks.db` (beside `app.py` when run that way; otherwise the current directory) | SQLite file |
+| `--max-high` | `GEM_MAX_HIGH` | `3` | Fire Drills cap |
+| `--max-medium` | `GEM_MAX_MEDIUM` | `5` | Important-ish cap |
+| `--max-low` | `GEM_MAX_LOW` | `unlimited` | Someday Maybe cap |
+
+A cap is a whole number from 1 to 10000, or `unlimited` (also `none`, `0`). Lowering a cap below the current count keeps existing tasks but blocks new ones until the bucket drains. Done has no cap.
+
+## Ways to run it
+
+```bash
+# 1. Standalone, no install (Python 3.8+)
+python app.py --max-high 2 --max-medium 8
+
+# 2. Installed as a command (pip or pipx)
+pipx install .          # or: pip install .
+gem-ergency-room --port 8080 --db ~/gem/tasks.db     # also: python -m gem_ergency_room
+
+# 3. Docker
+docker build -t gem-ergency-room .
+docker run -p 127.0.0.1:8000:8000 -v gem-data:/data -e GEM_MAX_HIGH=2 gem-ergency-room
+
+# 4. Docker Compose (data persists in the gem-data volume; caps come from GEM_MAX_* in your shell or a .env file)
+docker compose up -d
+```
+
+`deploy/gem-ergency-room.service` is an example systemd unit for a Linux host. `GET /healthz` is available for container and load-balancer health checks.
+
+**Security:** the app has no authentication. The container binds `0.0.0.0` internally, but the examples publish it on `127.0.0.1` only. To share it on a network, put an authenticating reverse proxy in front of it.
+
+## Exporting completed tasks
+
+The Done column has **CSV / JSON / PDF** links. They call `GET /api/export?format=csv|json|pdf`, with optional `from=YYYY-MM-DD` and `to=YYYY-MM-DD` to filter by completion date:
+
+```bash
+curl -o done.csv "http://127.0.0.1:8000/api/export?format=csv&from=2026-10-01"
+```
+
+Each record has ID, name, description, stakeholder, due date, last priority, tags, created time, completed time, and whether it was completed after its due date. Tasks created before this version have no created time. CSV cells that begin with `=`, `+`, `-` or `@` are prefixed with `'` so spreadsheets do not execute them. The PDF is generated without any third-party library; characters outside Windows-1252 (e.g. CJK) are replaced with `?` in the PDF only.
+
+## Color schemes
+
+The dropdown in the header switches between five schemes: **Calm blue** (default), Stormy morning, Urban graffiti, Harbor haze and Desert mirage. They follow the color descriptions of the same-named entries in [Figma's color combinations library](https://www.figma.com/resource-library/color-combinations/); that page publishes palette images without hex codes, so the exact values are our own interpretation. The choice is remembered in your browser.
+
 ## Sample configuration/setup and screenshots of usage
 
-There is no configuration file to fill out. The only setting is the optional `PORT` environment variable shown above. On first launch, the app creates `tasks.db` beside `app.py`.
+There is no configuration file; see Configuration above. On first launch, the app creates `tasks.db` beside `app.py`.
 
 ### A sample day at the office
 
@@ -61,12 +112,12 @@ The screenshot below shows the running board with active tasks, bucket capacity 
 
 ## Technical notes
 
-- `app.py` serves both the page and a small JSON API using Python’s built-in HTTP server. `index.html` contains the browser interface; `icon.svg` is the app icon.
+- `gem_ergency_room/server.py` serves both the page and a small JSON API using Python’s built-in HTTP server (`app.py` is a thin launcher). `index.html` contains the browser interface; `icon.svg` is the app icon; `export.py` and `config.py` handle exports and settings.
 - Tasks are stored in `tasks.db` (SQLite), created automatically on first run. The database is local and is ignored by Git. Back it up by stopping the app and copying that file; deleting it removes the task data.
-- The server binds to `127.0.0.1`, so it is intended for use on the same computer, not as a public or shared network service.
-- The High and Medium caps are enforced by the server, including during drag-and-drop. Low and Done have no cap. A task moved back out of Done retains its previous priority only until moved into another active bucket, where priority matches the destination.
+- By default the server binds to `127.0.0.1`, so it is intended for use on the same computer, not as a public or shared network service.
+- The configured caps are enforced by the server, including during drag-and-drop. Low and Done have no cap. A task moved back out of Done retains its previous priority only until moved into another active bucket, where priority matches the destination.
 - Text fields are trimmed and validated. Names and stakeholder fields allow up to 200 characters; descriptions up to 5,000; due dates use `YYYY-MM-DD`; each task can have up to 10 tags, each up to 30 characters.
-- The API routes are `GET /api/tasks`, `POST /api/tasks`, `PUT /api/tasks/<id>`, `DELETE /api/tasks/<id>`, and `POST /api/move`.
+- The API routes are `GET /api/tasks`, `POST /api/tasks`, `PUT /api/tasks/<id>`, `DELETE /api/tasks/<id>`, `POST /api/move`, `GET /api/config`, `GET /api/export` and `GET /healthz`.
 - The database initializer adds the tags column to an older database if needed.
 
 ## Troubleshooting

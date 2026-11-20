@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gem-ergency-room"
+version = "1.1.0"
+description = "A tiny drag-and-drop task board with capped priority buckets. Standard library only."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = []
+
+[project.scripts]
+gem-ergency-room = "gem_ergency_room.server:main"
+
+[tool.setuptools]
+packages = ["gem_ergency_room"]
+
+[tool.setuptools.package-data]
+gem_ergency_room = ["index.html", "icon.svg"]
